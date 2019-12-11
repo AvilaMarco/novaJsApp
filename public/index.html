@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>North Yourth Soccer League</title>
+	<meta charset="utf-8">
+	<!-- logo y pantalla completa, simula app nativa -->
+	<meta name="viewport" content="width=device-width">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="shortcut icon" sizes="196x196" href="img/logo.png">
+	<!-- estilos css -->
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/colores.css">
+	<link rel="stylesheet" type="text/css" href="css/animaciones.css">
+	<link rel="stylesheet" type="text/css" href="css/utilitis.css">
+	<link rel="stylesheet" media="screen and (min-width: 660px)" href="css/landscape.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://kit.fontawesome.com/e7886423a6.js"></script>
+</head>
+<body>
+	<div id="app">
+		<header class="header">
+			<img id="headerportraid" class="backgroundHeader" src="img/fondo.png" alt="background-img">
+			<img id="headerlandscape" class="backgroundHeader" src="img/fondoLandscape.jpg" alt="background-landscape-img">
+			<img class="logo" src="img/logo.png" alt="logo-img">
+			<img id="user-img" class="logo" src="img/logo-user.png" alt="logo-user-img" data-toggle="collapse" data-target="#collapseLogin">
+		</header>
+
+		<main class="main">
+			<!-- welcome user -->
+			<div id="user-welcome" class="div-welcome d-none">
+				<p>Success Login</p>
+				<p class="aboveText">Welcome marco avila</p>
+			</div>
+			<!-- collapse -->
+			<div id="collapseLogin" class="collapse fade">
+				<template v-if="datosuser!=null">
+					<span class="font-weight-bold ml-4 mr-2">{{datosuser.displayName}}</span>
+					<span class="text-secondary mr-2">{{datosuser.email}}</span><br>
+					<button @click="Logout" class="btn btn-info positionLogout">Logout</button>
+				</template>
+				<template v-else>
+					<button data-toggle="modal" data-target="#cardlogin" class="btn btn-info positionLogin">Login</button>
+					<card-login class="modal fade" id="cardlogin" @ircardlogin="LoginSocial"></card-login>
+				</template>
+			</div>
+
+			<!-- Home -->
+			<div v-show="singlePage == 'Home'">
+				<h1>Home</h1>
+
+				<!-- card today -->
+				<card-match v-for="(match,i) in matchesToday" :match="match" :id="'cardtoday'+i"></card-match>
+
+				<!-- card player example -->
+			<!-- 	<h2>card player example</h2>
+				<div class="card m-2">
+					<div class="card-header bg-dark blanco">
+						<h2>Homero (U1)</h2>
+					</div>
+					<h3 class="text-center m-2">Next Match</h3>
+					<ul class="list-group">
+						<li class="list-group-item">
+							<i class="fas fa-futbol icon-with-text"></i>
+							<span class="text-with-icon">U1 vs U3</span>
+						</li>
+					  <li class="list-group-item">
+							<i class="fas fa-map-marker-alt icon-with-text"></i>
+							<a href="#" class="text-with-icon">Howard A Yeager Elementary</a>
+						</li>
+					  <li class="list-group-item">
+							<i class="far fa-calendar-alt icon-with-text"></i>
+							<span class="text-with-icon">27 Oct</span>
+						</li>
+					  <li class="list-group-item">
+							<i class="far fa-clock icon-with-text"></i>
+							<span class="text-with-icon">09:30 a.m</span>
+						</li>
+					</ul>
+				</div>
+ -->
+
+
+				<div class="card mb-2">
+					<div class="card-header">
+						<a @click="scrollContact" class="btn bg-info btn-block blanco" href="#feedback" data-toggle="collapse">
+							Contact Us
+						</a>
+					</div>
+					<div class="collapse" id="feedback">
+						<div class="card-body">
+							<h3>Contact</h3>
+							<p>
+								<i class="fas fa-envelope icon-with-text"></i>
+								<a class="text-with-icon" href="mailto:nysl@chisoccer.org">nysl@chisoccer.org</a>
+							</p>
+							<p>
+								<i class="fab fa-whatsapp icon-with-text"></i>
+								<a class="text-with-icon" href="#">1178954348</a>
+							</p>
+							<h3>Feedback</h3>
+							<div class="form-group">
+								<div class="input-group mb-3">
+							    <input type="text" class="form-control" placeholder="Write Your Name">
+							  </div>
+								<div class="input-group mb-3">
+								  <input type="text" class="form-control" placeholder="Write Your Email">
+								</div>
+								<label>Write your comment:</label>
+							  <textarea v-model="feedback" class="form-control" rows="2" placeholder="Your opinion is important to us"></textarea>
+							</div>
+							<input :disabled="feedback==''" class="btn btn-primary btn-block mb-3" @click="enviarFeedback" value="Send">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Schedule -->
+			<div v-show="singlePage == 'Schedule'">
+				<h1>Schedule</h1>
+				<!-- filtro por equipos -->
+				<div class="flex-container wrap m-2" >
+					<button  @click="filtroPorEquipos" v-for="team in equipos" class="m-2 button-filtro" :name="team">
+						<img :name="team" class="img-filtro" :src="'img/'+team+'.png'" :alt="team">
+						<p :id="team" >{{team}}</p>
+					</button>
+				</div>
+
+				<!-- filtro por mes -->
+				<div class="flex-container m-2">
+				  <span class="input-group-text">Months</span>
+				  <select class="custom-select" v-model="mesFiltro">
+						<option value="All">All</option>
+				  	<option value="September">September</option>
+						<option value="October">October</option>
+				  </select>
+				</div>
+				<!-- tabla de juegos -->
+				<div class="scrolltable">
+					<table class="table text-center">
+						<thead class="thead-dark">
+							<tr>
+								<th class="sticky-top border border-0">Match</th>
+								<th class="sticky-top border border-0">Location</th>
+								<th class="sticky-top border border-0">Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template v-if="matches.length != 0">
+								<tr v-for="(match,key) in matches">
+									<td>
+										<p>{{match.teamA}}</p> <p>VS</p> <p>{{match.teamB}}</p>
+									</td>
+									<td>
+										<a name="landscape" @click="mapaLandscape(match)" href.prevent="#">{{match.school}}</a>
+										<a name="portrait" data-toggle="modal" :href="'#mapamodal'+key">{{match.school}}</a>
+										<div class="modal fade" :id="'mapamodal'+key">
+									    <div class="modal-dialog modal-dialog-centered">
+									      <google-maps :link="match.link" :school="match.school" :address="match.address" :ismodal="true"></google-maps>
+									    </div>
+									  </div>
+										<p class="d-none">{{match.address}}</p>
+										<button @click="webComments(match)" class="mt-4">Comments</button>
+									</td>
+									<td>
+										<p>{{match.date}}</p>
+										<p>{{match.time}}</p>
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+				<google-maps id="mapa" :link="linkMap" :school="schoolMap" :address="addressMap" :ismodal="false"></google-maps>
+			</div>
+
+			<!-- Comments -->
+			<div v-show="singlePage == 'Comments'" class="web-comments">
+				<!-- header -->
+				<div class="comments-header">
+					<h1 class="display-4">{{dataMatch.teamA}} VS {{dataMatch.teamB}}</h1>
+					<h6 class="text-secondary">Date: {{dataMatch.date}} || Time: {{dataMatch.time}}</h6>
+					<a href="#mapaComment" class="btn btn-primary" data-toggle="modal">{{dataMatch.school}}</a>
+					<div class="modal fade" id="mapaComment">
+						<div class="modal-dialog modal-dialog-centered">
+							<google-maps :link="dataMatch.link" :school="dataMatch.school" :address="dataMatch.address" :ismodal="true"></google-maps>
+						</div>
+					</div>
+				</div>
+				<!-- comments -->
+				<div class="comments-main">
+					<div v-for="comentarios in arraycomments" class="animation-textcomment media p-1 m-1 mr-2 ml-2">
+					  <img :src="comentarios.linkfoto" alt="img user" class="mr-2 mt-2 rounded-circle">
+					  <div class="media-body">
+					    <h5>{{comentarios.username}}</h5>
+					    <p>{{comentarios.comment}}</p>
+					  </div>
+					</div>
+				</div>
+				<!-- box comments -->
+				<div class="comments-footer">
+					<template v-if="datosuser == null">
+						<a class="btn btn-primary btn-block" style="margin: 0px 3px;" data-toggle="modal" href="#cardlogin3">To comment you must be logged in</a>
+						<card-login class="modal fade" id="cardlogin3" @ircardlogin="LoginSocial"></card-login>
+					</template>
+					<template v-else>
+						<input type="text" placeholder="Write Commentary" v-model="commentMatch" class="btn-comment-1">
+						<input type="button" value="comment" @click="comentarPartido" class="btn-comment-2">
+					</template>
+				</div>
+			</div>
+
+			<!-- Social -->
+			<div v-show="singlePage == 'Social'">
+				<h1>Social</h1>
+
+				<!-- tarjetas foloww user -->
+				<!-- v-for="card in datosarratys" -->
+				<card-followed v-for="card in datosarratys" :player="card" @borrarcard="deleteFollwCard"></card-followed>
+
+				<div v-if="datosuser==null" class="card m-2">
+					<div class="card-header">
+						<h2 class="card-title">Login to:</h2>
+					</div>
+					<div class="card-body">
+						<ul>
+							<li>Follow players or teams in the league</li>
+							<li>comment on matches</li>
+							<li>view your profile picture in the header of the page</li>
+						</ul>
+						<button data-toggle="modal" data-target="#cardlogin2" class="m-2 btn btn-primary btn-block mt-4">Login</button>
+						<card-login class="modal fade" id="cardlogin2" @ircardlogin="LoginSocial"></card-login>
+					</div>
+				</div>
+
+			<!-- agragar tarjetas -->
+			<div v-if="datosuser!=null" class="card mt-4">
+					<div class="card-header">
+						<button data-toggle="collapse" data-target="#addCard" class="btn btn-outline-success btn-block">Follow a Player / Team  <i class="fas fa-plus-circle"></i> </button>
+					</div>
+					<div id="addCard" class="collapse">
+						<div class="card-body">
+							<div class="input-group mb-3">
+								<p class="text-secondary">Add a card to have updated data of a Player or Team</p><br>
+							  <input class="form-control" type="text" v-model="followPlayer" placeholder="write player or team">
+							  <div class="input-group-append">
+								<input class="btn btn-info" type="button" @click="addFollowCard" value="agregar">
+							  </div>
+							  <p class="text-secondary">Try with: some character of the simpsons or U1, U2, U3, U4, U5, U6</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</main>
+
+		<nav class="nav d-flex">
+			<button data-name="Home" name="Home" @click="selectNav" class="flex-fill borde0 blanco bg-verde">
+				<i data-name="Home" class="fas fa-home"></i><br>Home</button>
+			<button data-name="Schedule" name="Schedule" @click="selectNav" class="flex-fill borde0 blanco bg-azul">
+				<i data-name="Schedule" class="far fa-calendar-alt"></i><br>Schedule</button>
+			<button data-name="Social" name="Social" @click="selectNav" class="flex-fill borde0 blanco bg-azul">
+				<i data-name="Social" class="fas fa-users"></i><br>Social</button>
+		</nav>
+	</div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+<script src="js/firebase.js"></script>
+<!-- vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- javascript local -->
+<script src="js/main.js"></script>
+<script src="js/vue.js"></script>
+</body>
+</html>

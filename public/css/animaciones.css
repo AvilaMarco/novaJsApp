@@ -1,0 +1,53 @@
+/*CLASES ANIMATION*/
+.animation-divEntry
+{
+	opacity: 0;
+	animation-name: Appear;
+  	animation-duration: 1s;
+ 	animation-fill-mode: forwards;
+}
+#user-welcome:nth-child(1)
+{
+	opacity: 0;
+	animation-name: Appear;
+  	animation-duration: 1s;
+ 	animation-fill-mode: backwards;
+ 	animation-delay: 1s;
+}
+#user-welcome:nth-child(2)
+{
+	opacity: 0;
+	animation-name: Appear;
+  	animation-duration: 1s;
+ 	animation-fill-mode: forwards;
+ 	animation-delay: 3s;
+}
+
+.animation-textcomment{
+	opacity: 0;
+	position: relative;
+	animation-name: textEntry;
+  	animation-duration: 1s;
+  	animation-delay: 0.5s;
+ 	animation-fill-mode: forwards;
+}
+
+
+/*KEY FRAMES ANIMATION*/
+@keyframes appear 
+{
+  	from 	{opacity: 0;}
+ 	 to 	{opacity: 1;}
+}
+
+@keyframes textEntry
+{
+	from{
+		right: 400px;
+		opacity: 0;
+	}
+	to{
+		right: 0px;
+		opacity: 1;
+	}
+}

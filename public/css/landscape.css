@@ -1,0 +1,91 @@
+.nav{
+	width: 12%;
+	height: 100% ;
+  flex-direction: row;
+}
+
+.main{
+	width: 88%;
+	height: 100%;
+  margin-bottom: 0;
+	margin-left: 12%;
+}
+
+/*header*/
+.header{
+  width: 88%;
+  margin-left: 12%
+}
+
+.backgroundHeader{
+  width: 100%;
+  height: 140px;
+}
+
+.logo{
+	width: 12%;
+}
+
+.logo-card{
+	width: 60%;
+}
+
+.positionLogin{
+	left: 83% !important;
+	margin: 10px !important;
+}
+
+#LoginSocial.mt-40{
+	margin-top: 0 !important;
+	margin-left: 6%;
+}
+
+#headerportraid{
+	display: none !important;
+}
+
+#headerlandscape{
+	display: block !important;
+}
+.wrap{
+	flex-wrap: nowrap !important;
+}
+/* tabla de juegos con mapa */
+.scrolltable{
+	height: 100vh;
+	width: 50%;
+	float: left;
+	overflow: auto;
+}
+#cardtoday0 div[class*="modal"],
+#cardtoday1 div[class*="modal"]{
+	    margin-left: 11%;
+}
+
+/* table{
+	float: left !important;
+	width: 50% !important;
+} */
+
+#mapa,
+a[name*="landscape"]{
+	display: block !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+a[name*="landscape"]{
+	color: #007bff !important;
+}
+
+a[name*="portrait"]{
+	display: none !important;
+}
+
+a[name*="isortraid"]{
+	display: none !important;
+}
+
+a[name*="isandscape"]{
+	display: block !important;
+}

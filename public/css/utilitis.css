@@ -1,0 +1,64 @@
+.oculto{
+	display: none;
+}
+
+.borde0{
+	border: 0;
+}
+
+.flex-container{
+	display: flex;
+}
+
+.wrap{
+	flex-wrap: wrap;
+}
+
+h1{
+	text-align: center;
+}
+
+.text-with-icon{
+	display: inline-block;
+  text-align: center;
+  width: 100%;
+	font-weight: bold;
+}
+
+li span{
+	font-size: 22px;
+}
+
+.icon-with-text{
+	position: absolute;
+	font-size: 25px;
+}
+
+button:focus {
+    outline: 0 !important;
+}
+
+.mt-40{
+	margin-top: 40%;
+}
+
+#mapa,
+a[name*="landscape"]{
+	display: none !important;
+}
+
+a[name*="portrait"]{
+	display: block !important;
+}
+
+.fs-14{
+	font-size: 14px;
+}
+
+.fs-25{
+	font-size: 25px;
+}
+
+*[name*="isandscape"]{
+	display: none !important;
+}

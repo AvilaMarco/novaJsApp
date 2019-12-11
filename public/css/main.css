@@ -1,0 +1,180 @@
+/*header*/
+.header{
+	width: 100%;
+	height: 25%;
+	position: relative;
+}
+
+.backgroundHeader{
+	width: 100%;
+	height: 90%;
+}
+
+#headerportraid{
+	display: block !important;
+}
+
+#headerlandscape{
+	display: none !important;
+}
+
+.logo{
+	width: 20%;
+	position: absolute;
+	bottom: 5%;
+}
+
+img[alt*="logo-user-img"]{
+	right: 5%;
+}
+
+img[alt*="logo-img"]{
+	left: 5%;
+}
+
+.positionLogin{
+	position: relative;
+  margin-top: 3%;
+  margin-right: 6%;
+  left: 75%;
+	margin: 8px;
+}
+
+.positionLogout{
+	position: relative;
+    display: block;
+    width: 85vw;
+    margin-left: 6%;
+}
+.div-welcome
+{
+	width: 100%;
+    text-align: center;
+    background: #4ec025;
+    font-weight: 900;
+    font-size: 20px;
+}
+.aboveText
+{
+    position: absolute;
+    left: 22vw;
+    top: 28vh;
+}
+/*main*/
+.main{
+	width: 100%;
+	height: 65%;
+	margin-bottom: 20%;
+}
+
+.img-filtro{
+	width: 50px;
+}
+
+.button-filtro{
+	height: 83px;
+  width: 28%;
+	padding-top: 1%;
+	border-radius: 15%;
+	border: solid #4ec025 2px;
+	background-color: white;
+	opacity: 0.4;
+}
+
+.logo-card{
+		width: 100%;
+}
+/*nav*/
+.nav{
+	width: 100%;
+	height: 10%;
+	position: fixed;
+	bottom: 0;
+	z-index: 9000;
+}
+
+.headerCard
+{
+	display: flex;
+    justify-content: space-between;
+}
+.btn-headerCard{
+	background: inherit;
+    border: 0;
+    color: white;
+    font-size: 25px;
+}
+
+/*comments*/
+.web-comments
+{
+	height: 88vh;
+    width: 100%;
+}
+.comments-header
+{
+	height: 23%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.comments-main
+{
+	height: 70%;
+	overflow: auto;
+}
+.comments-footer
+{
+	height: 7%;
+	display: flex;
+    justify-content: center;
+}
+.btn-comment-1
+{
+	width: 75%;
+    border-radius: 10px 0 0 10px;
+    outline: none;
+}
+.btn-comment-2
+{
+	border-radius: 0 15px 15px 0;
+    outline: none;
+}
+@media screen and (min-width: 560px) and (max-width: 660px)
+{	
+	br{
+		display: none;
+	}
+	nav i{
+		margin-right: 5%;
+	}
+
+	nav{
+		height: 13% !important;
+	}
+
+	#LoginSocial.mt-40{
+		margin-top: 0 !important;
+	}
+	.wrap{
+		flex-wrap: nowrap !important;
+	}
+
+	.logo{
+		width: 15%;
+	}
+
+	.backgroundHeader{
+		width: 100%;
+		height: 140px;
+	}
+
+	#headerportraid{
+		display: none !important;
+	}
+
+	#headerlandscape{
+		display: block !important;
+	}
+}
