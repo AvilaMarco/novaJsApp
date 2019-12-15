@@ -1,8 +1,6 @@
-// JSON.parse(localStorage.getItem("participantes"))
 // var today = new Date().toDateString().substring(4,10).split(" ").reverse().join(" ")
 var today = "27 Oct"
-// fechasJSON("All",today,'')
-// fechasJSON("October",today,playerOnTeam("Homero"),false)
+
 function fechasJSON(mesFiltro, filtroToday,filtroTeam,isteam) {
   let fechas = filtroOrden(mesFiltro, JSON.parse(localStorage.getItem("fechas")))
   let filtro = []
@@ -92,4 +90,8 @@ function crearObjetoCard(card,isteam,team){
 function firstChartUppeCase(string) {
   return string[0].toLocaleUpperCase() + string.substring(1)
 
+}
+
+function toggleDisplay(){
+  document.querySelector("#collapseLogin").classList.toggle("d-flexy")
 }

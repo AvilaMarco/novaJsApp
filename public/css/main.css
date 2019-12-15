@@ -1,3 +1,6 @@
+*{
+	margin: 0;
+}
 /*header*/
 .header{
 	width: 100%;
@@ -22,6 +25,7 @@
 	width: 20%;
 	position: absolute;
 	bottom: 5%;
+	border-radius: 50px;
 }
 
 img[alt*="logo-user-img"]{
@@ -32,33 +36,23 @@ img[alt*="logo-img"]{
 	left: 5%;
 }
 
-.positionLogin{
-	position: relative;
-  margin-top: 3%;
-  margin-right: 6%;
-  left: 75%;
-	margin: 8px;
-}
-
-.positionLogout{
-	position: relative;
-    display: block;
-    width: 85vw;
-    margin-left: 6%;
-}
 .div-welcome
 {
+	position: relative;
 	width: 100%;
     text-align: center;
-    background: #4ec025;
+   	color: #21580d;
+    background: #baf3a5;
     font-weight: 900;
     font-size: 20px;
 }
 .aboveText
 {
     position: absolute;
-    left: 22vw;
-    top: 28vh;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%);
+    width: 90vw;
 }
 /*main*/
 .main{
@@ -154,6 +148,21 @@ img[alt*="logo-img"]{
 	margin: 10px;
 
 }
+.commets-date
+{
+	position: absolute;
+    bottom: 50%;
+    right: 0;
+    opacity: 0.5;
+    display: flex;
+    height: 25px;
+    margin-right: 10px;
+    flex-flow: column;
+}
+.commets-date p
+{
+	margin: 0;
+}
 @media screen and (min-width: 560px) and (max-width: 660px)
 {	
 	br{
@@ -189,5 +198,17 @@ img[alt*="logo-img"]{
 
 	#headerlandscape{
 		display: block !important;
+	}
+	.comments-header {
+    	flex-flow: row;
+	}
+	.comments-main {
+	    height: 87%;
+	}
+	.btn-comment-1 {
+	    width: 85%;
+	}
+	.comments-footer {
+	    height: 12%;
 	}
 }

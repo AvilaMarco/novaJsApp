@@ -62,11 +62,6 @@
 	    margin-left: 11%;
 }
 
-/* table{
-	float: left !important;
-	width: 50% !important;
-} */
-
 #mapa,
 a[name*="landscape"]{
 	display: block !important;
@@ -88,4 +83,17 @@ a[name*="isortraid"]{
 
 a[name*="isandscape"]{
 	display: block !important;
+}
+.btn-comment-1 {
+    width: 85%;
+}
+.comments-header {
+    flex-flow: row;
+}
+.width-20{
+	width: 20%;
+}
+.comments-footer {
+    height: 10%;
+    margin: 5px;
 }

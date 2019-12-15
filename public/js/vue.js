@@ -30,13 +30,14 @@ Vue.component('google-maps',{
 Vue.component('card-followed',{
 	props:{
 		player:{type:Object},
+		index:{type:Number},
 	},
 	template:`
 	<div class="card m-2">
 		<div class="card-header bg-dark blanco headerCard">
 			<h2 v-if="player.isteam">{{player.nameTeam}}</h2>
 			<h2 v-else>{{player.namePlayer}} ({{player.nameTeam}})</h2>
-			<button class="btn-headerCard" @click="toDeletecard(player.id+player.nameTeam)">X</button>
+			<button class="btn-headerCard" @click="toDeletecard(player.id+player.nameTeam,index)">X</button>
 		</div>
 		<h3 class="text-center m-2">Next Match</h3>
 		<ul class="list-group">
@@ -65,9 +66,9 @@ Vue.component('card-followed',{
 	</div>
 	`,
 	methods:{
-		toDeletecard(id){
+		toDeletecard(id,index){
 			console.log(id)
-			this.$emit('borrarcard',id)
+			this.$emit('borrarcard',id,index)
 		}
 	}
 })
@@ -165,12 +166,13 @@ let app = new Vue({
 	methods:{
 		selectNav(event){
 			if (this.singlePage != "Comments"){
-				document.querySelector('button[name*="'+this.singlePage+'"').classList.remove('bg-verde')
-				document.querySelector('button[name*="'+this.singlePage+'"').classList.add('bg-azul')
+				document.querySelector('button[name*="'+this.singlePage+'"').classList.replace('bg-verde', 'bg-azul')
+			}else if (this.singlePage == "Comments") {}{
+				document.querySelector('button[name*="Schedule"').classList.replace('bg-verde','bg-azul')
 			}
 			let click = event.target;
 			this.singlePage = click.dataset.name;
-			click.name != "" ? click.classList.add('bg-verde'):null
+			click.name != undefined ? click.classList.add('bg-verde'):null
 		},
 		filtroPorEquipos(event){
 			// con esto me aseguro de obtener siempre el equipo que se clickeo
@@ -224,9 +226,9 @@ let app = new Vue({
 				alert("Player/Team no found")
 			}
 		},
-		deleteFollwCard(id){
+		deleteFollwCard(id,index){
 			console.log(id)
-			borrarTarjetaUsuarios(id)
+			borrarTarjetaUsuarios(id,index)
 		},
 		enviarFeedback(){
 			agregarFeedback(this.feedback,"pruebas")
@@ -267,6 +269,15 @@ let app = new Vue({
 		},
 		matchesToday(){
 			return fechasJSON("All",today,'');
+		},
+		textDate(date){
+			let date = date
+			if (date.split("/").length == 1){
+				return date
+			}else{
+				let aux = date.split("/")
+				return aux[1] +"/"+ aux[0] +"/"+ aux[2]
+			}
 		}
 	}
 })

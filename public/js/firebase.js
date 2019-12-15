@@ -1,8 +1,6 @@
 // falta agregar kla camera 
 // que se puieda usar offline
 // hacer filtro de busqueda por descarte o coincidencia
-
-
 let providerGoogle = new firebase.auth.GoogleAuthProvider();
 var providerFacebook = new firebase.auth.FacebookAuthProvider();
 var providerTwitter = new firebase.auth.TwitterAuthProvider();
@@ -27,19 +25,17 @@ if (user) {
 	app.datosuser.photoURL = user.photoURL
 	app.datosuser.displayName = user.displayName
 	app.datosuser.email = user.email
+	document.querySelector('#user-img').src = user.photoURL
 
-	//ANIMACION SALUDO USER
-	// FALTA ARREGLAR
-		document.querySelector('#user-welcome').classList.remove('d-none')
-		document.querySelector('#Success').classList.add('animation-text1')
-		document.querySelector('#welcome').classList.add('animation-text2')
-
-	setTimeout(e=> {
-			document.querySelector('#user-welcome').classList.add('d-none')
-		},4500)
 
 	docRefUser = fireStore.collection('usuarios').doc(app.datosuser.displayName).collection('tarjetas')
 	agregarUsuarios(user.displayName,app.datosuser)
+
+	//ANIMACION SALUDO USER
+	document.querySelector('#user-welcome').classList.remove('d-none')
+	document.querySelector('#Success').classList.add('animation-text1')
+	document.querySelector('#welcome').classList.add('animation-text2')
+	setTimeout(e=> document.querySelector('#user-welcome').classList.add('d-none') ,5000)
 
 	docRefUser.get().then(function(querySnapshot) {
 	    querySnapshot.forEach(function(doc) {
@@ -49,12 +45,12 @@ if (user) {
 }else{
 	app.datosarratys = []
 	app.datosuser = null
+	document.querySelector('#user-img').src = "img/logo-user.png"
 }
 })
 
 function agregarUsuarios(usuario, objetouser){
 fireStore.doc("usuarios/"+usuario).set({objetouser}).then(function(docRef) {
-		// eliminar tarjeta de modo local
 	    console.log("usuario enviado correctamente");
 	})
 }
@@ -66,9 +62,9 @@ function actualizarTarjetaUsuarios(objetotarjeta){
 	    console.log("card enviado correctamente");
 	})
 }
-function borrarTarjetaUsuarios(id){
+function borrarTarjetaUsuarios(id,index){
 	docRefUser.doc(id).delete().then(function(docRef) {
-		app.datosarratys.push(objetotarjeta)
+		app.datosarratys.splice(index,1)
     	console.log("tarjeta borrada correctamente");
 	})
 }
@@ -97,32 +93,18 @@ function commentsMatch(comentario,user,photo,id) {
 }
 
 function traerComentarios(id) {
+	let contador = 0;
+	let aumento = 500;
+	app.arraycomments = []
 	fireStore.collection("matchcomments").doc(id).collection('comenkey').onSnapshot(function(querySnapshot) {
-		app.arraycomments = []
-    querySnapshot.forEach(function(doc) {
-        app.arraycomments.push(doc.data())
-    });
-});
+    	contador = 0;
+	    querySnapshot.forEach(function(doc) {
+	    	if (!(app.arraycomments.some(c => c.date.seconds == doc.data().date.seconds))){
+	    		setTimeout(e=> {
+	        		app.arraycomments.push(doc.data())
+	        		document.querySelector(".comments-main").scrollBy(0,85)	
+				},contador+=aumento)
+	    	}
+	    });
+	});
 }
-
-	// docRefUser.add(objetotarjeta).then(function(docRef) {
-	//     console.log("tarjeta enviado correctamente");
-	//     let auxid = docRef.id
-	// 		objetotarjeta['id'] = auxid
-	// 		app.datosarratys.push(objetotarjeta)
-	// 		updateid(auxid)
-	// })
-
-// function updateid(idt) {
-// 	docrefuser.doc(idt).update({
-// 		'id' : idt
-// 	}).then(function(docRef) {
-// 		console.log("update");
-// 	})
-// }
-
-
-// inicion de sesion
-// firebase.auth().signInWithRedirect(provedor de cuentas);
-//cerrar sesion
-// firebase.auth().signOut()
