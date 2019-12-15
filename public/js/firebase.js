@@ -1,3 +1,8 @@
+// falta agregar kla camera 
+// que se puieda usar offline
+// hacer filtro de busqueda por descarte o coincidencia
+
+
 let providerGoogle = new firebase.auth.GoogleAuthProvider();
 var providerFacebook = new firebase.auth.FacebookAuthProvider();
 var providerTwitter = new firebase.auth.TwitterAuthProvider();
@@ -24,20 +29,21 @@ if (user) {
 	app.datosuser.email = user.email
 
 	//ANIMACION SALUDO USER
-	setTimeout(e=> {
+	// FALTA ARREGLAR
 		document.querySelector('#user-welcome').classList.remove('d-none')
-		document.querySelector('#user-welcome').classList.add('animation-divEntry')
-	},2500)
+		document.querySelector('#Success').classList.add('animation-text1')
+		document.querySelector('#welcome').classList.add('animation-text2')
+
 	setTimeout(e=> {
 			document.querySelector('#user-welcome').classList.add('d-none')
-		},7500)
+		},4500)
 
 	docRefUser = fireStore.collection('usuarios').doc(app.datosuser.displayName).collection('tarjetas')
 	agregarUsuarios(user.displayName,app.datosuser)
 
 	docRefUser.get().then(function(querySnapshot) {
 	    querySnapshot.forEach(function(doc) {
-	        app.datosarratys.push(doc.data())
+	        app.datosarratys.push(doc.data().objetotarjeta)
 	    });
 	});
 }else{
@@ -48,7 +54,7 @@ if (user) {
 
 function agregarUsuarios(usuario, objetouser){
 fireStore.doc("usuarios/"+usuario).set({objetouser}).then(function(docRef) {
-
+		// eliminar tarjeta de modo local
 	    console.log("usuario enviado correctamente");
 	})
 }
@@ -61,25 +67,11 @@ function actualizarTarjetaUsuarios(objetotarjeta){
 	})
 }
 function borrarTarjetaUsuarios(id){
-	docrefuser.doc(id).delete().then(function(docRef) {
-    console.log("tarjeta borrada correctamente");
+	docRefUser.doc(id).delete().then(function(docRef) {
+		app.datosarratys.push(objetotarjeta)
+    	console.log("tarjeta borrada correctamente");
 	})
 }
-	// docRefUser.add(objetotarjeta).then(function(docRef) {
-	//     console.log("tarjeta enviado correctamente");
-	//     let auxid = docRef.id
-	// 		objetotarjeta['id'] = auxid
-	// 		app.datosarratys.push(objetotarjeta)
-	// 		updateid(auxid)
-	// })
-
-// function updateid(idt) {
-// 	docrefuser.doc(idt).update({
-// 		'id' : idt
-// 	}).then(function(docRef) {
-// 		console.log("update");
-// 	})
-// }
 
 //base de datos
 // enviarFeedback
@@ -112,6 +104,23 @@ function traerComentarios(id) {
     });
 });
 }
+
+	// docRefUser.add(objetotarjeta).then(function(docRef) {
+	//     console.log("tarjeta enviado correctamente");
+	//     let auxid = docRef.id
+	// 		objetotarjeta['id'] = auxid
+	// 		app.datosarratys.push(objetotarjeta)
+	// 		updateid(auxid)
+	// })
+
+// function updateid(idt) {
+// 	docrefuser.doc(idt).update({
+// 		'id' : idt
+// 	}).then(function(docRef) {
+// 		console.log("update");
+// 	})
+// }
+
 
 // inicion de sesion
 // firebase.auth().signInWithRedirect(provedor de cuentas);

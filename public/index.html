@@ -29,8 +29,8 @@
 		<main class="main">
 			<!-- welcome user -->
 			<div id="user-welcome" class="div-welcome d-none">
-				<p>Success Login</p>
-				<p class="aboveText">Welcome marco avila</p>
+				<p id="Success">Success Login</p>
+				<p id="welcome" class="aboveText">Welcome marco avila</p>
 			</div>
 			<!-- collapse -->
 			<div id="collapseLogin" class="collapse fade">
@@ -51,35 +51,6 @@
 
 				<!-- card today -->
 				<card-match v-for="(match,i) in matchesToday" :match="match" :id="'cardtoday'+i"></card-match>
-
-				<!-- card player example -->
-			<!-- 	<h2>card player example</h2>
-				<div class="card m-2">
-					<div class="card-header bg-dark blanco">
-						<h2>Homero (U1)</h2>
-					</div>
-					<h3 class="text-center m-2">Next Match</h3>
-					<ul class="list-group">
-						<li class="list-group-item">
-							<i class="fas fa-futbol icon-with-text"></i>
-							<span class="text-with-icon">U1 vs U3</span>
-						</li>
-					  <li class="list-group-item">
-							<i class="fas fa-map-marker-alt icon-with-text"></i>
-							<a href="#" class="text-with-icon">Howard A Yeager Elementary</a>
-						</li>
-					  <li class="list-group-item">
-							<i class="far fa-calendar-alt icon-with-text"></i>
-							<span class="text-with-icon">27 Oct</span>
-						</li>
-					  <li class="list-group-item">
-							<i class="far fa-clock icon-with-text"></i>
-							<span class="text-with-icon">09:30 a.m</span>
-						</li>
-					</ul>
-				</div>
- -->
-
 
 				<div class="card mb-2">
 					<div class="card-header">
@@ -189,8 +160,8 @@
 				</div>
 				<!-- comments -->
 				<div class="comments-main">
-					<div v-for="comentarios in arraycomments" class="animation-textcomment media p-1 m-1 mr-2 ml-2">
-					  <img :src="comentarios.linkfoto" alt="img user" class="mr-2 mt-2 rounded-circle">
+					<div v-for="comentarios in arraycomments" class="animation-textcomment media div-comment">
+					  <img :src="comentarios.linkfoto" alt="img user" class="rounded-circle img-comment">
 					  <div class="media-body">
 					    <h5>{{comentarios.username}}</h5>
 					    <p>{{comentarios.comment}}</p>
@@ -215,7 +186,6 @@
 				<h1>Social</h1>
 
 				<!-- tarjetas foloww user -->
-				<!-- v-for="card in datosarratys" -->
 				<card-followed v-for="card in datosarratys" :player="card" @borrarcard="deleteFollwCard"></card-followed>
 
 				<div v-if="datosuser==null" class="card m-2">

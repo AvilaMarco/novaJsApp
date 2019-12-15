@@ -42,7 +42,7 @@ Vue.component('card-followed',{
 		<ul class="list-group">
 			<li class="list-group-item">
 				<i class="fas fa-futbol icon-with-text"></i>
-				<span class="text-with-icon">{{player.teamA}} vs {{player.teamB}}}</span>
+				<span class="text-with-icon">{{player.teamA}} vs {{player.teamB}}</span>
 			</li>
 		  <li class="list-group-item">
 				<i class="fas fa-map-marker-alt icon-with-text"></i>
@@ -164,8 +164,10 @@ let app = new Vue({
 	},
 	methods:{
 		selectNav(event){
-			document.querySelector('button[name*="'+this.singlePage+'"').classList.remove('bg-verde')
-			document.querySelector('button[name*="'+this.singlePage+'"').classList.add('bg-azul')
+			if (this.singlePage != "Comments"){
+				document.querySelector('button[name*="'+this.singlePage+'"').classList.remove('bg-verde')
+				document.querySelector('button[name*="'+this.singlePage+'"').classList.add('bg-azul')
+			}
 			let click = event.target;
 			this.singlePage = click.dataset.name;
 			click.name != "" ? click.classList.add('bg-verde'):null
@@ -223,6 +225,7 @@ let app = new Vue({
 			}
 		},
 		deleteFollwCard(id){
+			console.log(id)
 			borrarTarjetaUsuarios(id)
 		},
 		enviarFeedback(){
@@ -249,7 +252,7 @@ let app = new Vue({
 		comentarPartido(){
 			if (this.commentMatch != ""){
 				commentsMatch(this.commentMatch,this.datosuser.displayName,this.datosuser.photoURL,this.dataMatch.id)
-				console.log(this.commentMatch)
+				this.commentMatch = ""
 			}else{
 				alert("Write a comment")
 			}

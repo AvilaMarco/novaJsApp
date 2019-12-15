@@ -141,6 +141,19 @@ img[alt*="logo-img"]{
 	border-radius: 0 15px 15px 0;
     outline: none;
 }
+.div-comment
+{
+    border: solid;
+    border-radius: 25px;
+    margin: 5px;
+    margin-top: 10px;
+}
+.img-comment
+{
+	width: 50px;
+	margin: 10px;
+
+}
 @media screen and (min-width: 560px) and (max-width: 660px)
 {	
 	br{
